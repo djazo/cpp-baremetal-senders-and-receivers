@@ -13,6 +13,8 @@ baremetal_concurrency_dep = baremetal_concurrency_sub.get_variable('baremetal_co
 stdx_sub = subproject('cpp-std-extensions')
 stdx_dep = stdx_sub.get_variable('stdx_dep')
 
+inc = include_directories('include')
+
 async_dep = declare_dependency(
   include_directories: inc,
   dependencies: [baremetal_concurrency_dep, boost_dep, stdx_dep]
