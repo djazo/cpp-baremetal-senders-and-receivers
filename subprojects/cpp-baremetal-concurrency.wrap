@@ -1,4 +1,3 @@
 [wrap-git]
 url = git@github.com:djazo/cpp-baremetal-concurrency.git
 revision = meson
-depth = 1
