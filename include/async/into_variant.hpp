@@ -56,7 +56,8 @@ template <typename... Ts>
 using decayed_tuple = stdx::tuple<std::decay_t<Ts>...>;
 
 template <typename S, typename Env, template <typename...> typename V>
-using variant_t = value_types_of_t<S, Env, decayed_tuple, V>;
+using variant_t =
+    boost::mp11::mp_unique<value_types_of_t<S, Env, decayed_tuple, V>>;
 } // namespace detail
 
 template <stdx::ct_string Name, typename S, template <typename...> typename V>
@@ -74,7 +75,8 @@ struct sender {
     }
 
     template <async::receiver R>
-        requires multishot_sender<S>
+        requires multishot_sender<
+            S, async::detail::universal_receiver<env_of_t<R>>>
     [[nodiscard]] constexpr auto connect(R &&r) const & {
         check_connect<sender const &, R>();
         using env_t = env_of_t<std::remove_cvref_t<R>>;
