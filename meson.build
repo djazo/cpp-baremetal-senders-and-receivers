@@ -17,7 +17,7 @@ baremetal_concurrency_dep = baremetal_concurrency_sub.get_variable(
 stdx_sub = subproject('cpp-std-extensions')
 stdx_dep = stdx_sub.get_variable('stdx_dep')
 
-add_project_options('-DSIMULATE_FREESTANDING', language: 'cpp')
+add_project_arguments('-DSIMULATE_FREESTANDING', language: 'cpp')
 
 inc = include_directories('include')
 
