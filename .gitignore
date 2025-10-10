@@ -16,3 +16,4 @@ docs/puppeteer_config.json
 /subprojects/*/
 !/subprojects/*.wrap
 .meson-subproject-wrap-hash.txt
+docs/mermaid.conf
