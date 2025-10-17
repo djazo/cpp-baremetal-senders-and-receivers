@@ -1,6 +1,8 @@
 #pragma once
 
-#ifdef SIMULATE_FREESTANDING
+#include <async/detail/freestanding.hpp>
+
+#ifdef ASYNC_FREESTANDING
 #define HAS_CONDITION_VARIABLE 0
 #else
 #define HAS_CONDITION_VARIABLE __has_include(<condition_variable>)
