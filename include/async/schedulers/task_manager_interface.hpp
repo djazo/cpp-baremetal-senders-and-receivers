@@ -1,5 +1,6 @@
 #pragma once
 
+#include <async/schedulers/requeue_policy.hpp>
 #include <async/schedulers/task.hpp>
 
 #include <stdx/intrusive_forward_list.hpp>
@@ -78,7 +79,6 @@ template <typename...>
 inline auto injected_task_manager = detail::undefined_task_manager{};
 
 namespace task_mgr {
-namespace detail {
 template <typename... DummyArgs, typename... Args>
     requires(sizeof...(DummyArgs) == 0)
 auto enqueue_task(Args &&...args) -> bool {
@@ -91,12 +91,12 @@ template <priority_t P, typename... DummyArgs>
 constexpr auto valid_priority() -> bool {
     return injected_task_manager<DummyArgs...>.template valid_priority<P>();
 }
-} // namespace detail
 
-template <priority_t P, typename... DummyArgs>
+template <priority_t P, typename RQP = requeue_policy::deferred,
+          typename... DummyArgs>
     requires(sizeof...(DummyArgs) == 0)
 auto service_tasks() -> void {
-    return injected_task_manager<DummyArgs...>.template service_tasks<P>();
+    return injected_task_manager<DummyArgs...>.template service_tasks<P, RQP>();
 }
 
 template <typename... DummyArgs>
